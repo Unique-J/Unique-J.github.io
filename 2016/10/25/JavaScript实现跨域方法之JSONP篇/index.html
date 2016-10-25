@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JavaScript JSONP," />
+  <meta name="keywords" content="JSONP," />
 
 
 
@@ -94,7 +94,7 @@
 <meta property="og:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。
 
 同源策略 限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的">
-<meta property="og:updated_time" content="2016-10-25T05:19:43.419Z">
+<meta property="og:updated_time" content="2016-10-25T05:49:45.189Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript实现跨域方法之JSONP篇">
 <meta name="twitter:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。
@@ -281,6 +281,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -327,10 +346,10 @@
 <p><a href="https://zh.wikipedia.org/wiki/JSONP" target="_blank" rel="external">JSONP</a>（JSON with Padding）是资料格式JSON的一种“使用模式”，可以让网页从别的网域要资料。另一个解决这个问题的新方法是跨来源资源共享。</p>
 </blockquote>
 <h5 id="2、JSONP-原理与实现方式"><a href="#2、JSONP-原理与实现方式" class="headerlink" title="2、JSONP 原理与实现方式"></a>2、JSONP 原理与实现方式</h5><p>在了解 JSONP 原理之前我们先来看一段简单的代码：</p>
-<p><em>demo.html:</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;Demo&lt;/title&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">        function printString(str) &#123;</div><div class="line">            alert(str);</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p><em>demo.js:</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">printString(&apos;Hello, JSONP!&apos;);</div></pre></td></tr></table></figure></p>
+<p><em>demo.html:</em><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">        function printString(str) &#123;</div><div class="line">            alert(str);</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"demo.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><em>demo.js:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">printString(<span class="string">'Hello, JSONP!'</span>);</div></pre></td></tr></table></figure></p>
 <p>在浏览器中运行一下, 你会发现页面中弹出了一个带有 ‘Hello, JSONP’ 的弹窗。 你可能会想这两段代码很简单，凡是会点 JavaScript 的都能写出来，但这跟 JSONP 又有什么关系。其实这就是 JSONP 最简单的原型。我们都知道我们可以访问不同域下的　JS 脚本，因此我们可以通过 JS 的这个特点来实现资源的跨域请求。即我们可以将上述　demo.html 页面的脚本中的 src 更改为 <a href="http://www.crossdomin.com/getdata.php?callback=printString" target="_blank" rel="external">http://www.crossdomin.com/getdata.php?callback=printString</a> ，此时 getdata.php 会根据你传入的 callback　参数名构造一个函数并将 JSON 数据传入这个函数后返回：printString({“01”: {“name”: “a”, “age”: 20}, “02”: …}), 这时我们的页面就可以通过 printString 函数打印出我们想要访问的数据了。</p>
-<p>下面来展示一个实际的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;Demo&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;button type=&quot;button&quot; id=&quot;btn&quot;&gt;获取数据&lt;/button&gt;</div><div class="line"></div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">        function getData(data) &#123;</div><div class="line">            alert(`name: $&#123;data[&apos;0000001&apos;].name&#125;\nprice: $&#123;data[&apos;0000001&apos;].price&#125;`);</div><div class="line">        &#125;</div><div class="line">        document.getElementById(&apos;btn&apos;).addEventListener(&apos;click&apos;, function () &#123;</div><div class="line">            var js = document.createElement(&apos;script&apos;);</div><div class="line">            js.src = &apos;http://api.money.126.net/data/feed/0000001,1399001?callback=getData&apos;;</div><div class="line">            document.head.appendChild(js);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>下面来展示一个实际的例子：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>获取数据<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">            alert(<span class="string">`name: <span class="subst">$&#123;data[<span class="string">'0000001'</span>].name&#125;</span>\nprice: <span class="subst">$&#123;data[<span class="string">'0000001'</span>].price&#125;</span>`</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> js = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">            js.src = <span class="string">'http://api.money.126.net/data/feed/0000001,1399001?callback=getData'</span>;</div><div class="line">            <span class="built_in">document</span>.head.appendChild(js);</div><div class="line">        &#125;);</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>上面的例子通过点击一个按钮动态地构造了一段脚本去获取我们想要的例子。</p>
 <p>通过以上的例子我们可以发现其实 JSONP 的原理很简单，即通过 script 标签对 javascript 文档的动态解析来实现跨域的资源请求。</p>
 
@@ -355,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript-JSONP/" rel="tag">#JavaScript JSONP</a>
+            <a href="/tags/JSONP/" rel="tag">#JSONP</a>
           
         </div>
       
@@ -433,6 +452,13 @@
             </a>
           </div>
 
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
           
 
           
