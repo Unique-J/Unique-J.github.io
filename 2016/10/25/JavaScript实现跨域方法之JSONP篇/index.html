@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。
-
-同源策略 限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的">
+<meta name="description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript实现跨域方法之JSONP篇">
 <meta property="og:url" content="http://yoursite.com/2016/10/25/JavaScript实现跨域方法之JSONP篇/index.html">
 <meta property="og:site_name" content="Sin">
-<meta property="og:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。
-
-同源策略 限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的">
-<meta property="og:updated_time" content="2016-10-25T07:02:13.038Z">
+<meta property="og:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。">
+<meta property="og:updated_time" content="2016-10-25T09:47:30.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript实现跨域方法之JSONP篇">
-<meta name="twitter:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。
-
-同源策略 限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的">
+<meta name="twitter:description" content="一、同源策略用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。">
 
 
 
@@ -336,10 +330,10 @@
 
       
         <h2 id="一、同源策略"><a href="#一、同源策略" class="headerlink" title="一、同源策略"></a>一、同源策略</h2><p>用过 AJAX 的程序猿(媛)都应该知道当 JavaScript 在发送 AJAX 请求时, URL 的域名必须和当前页面完全一致,如果不一致,那这个请求将会失败。为什么会这样呢？这个原因就得归结于浏览器的安全限制,即同源策略( JavaScript 或 Cookie 只能访问同域下的内容)。</p>
+<a id="more"></a>
 <blockquote>
 <p><strong><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="external">同源策略</a></strong> 限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</p>
 </blockquote>
-<a id="more"></a>
 <p>举个简单点的例子:<br>我们在同一个浏览器中打开两个页面：<a href="http://www.a.com/index.html" target="_blank" rel="external">http://www.a.com/index.html</a> 和 <a href="http://www.b.com/index.html" target="_blank" rel="external">http://www.b.com/index.html</a>, 其中 a.js 属于页面 a, 而 b.js 属于页面 b。 当页面 a 要执行一个脚本时,浏览器会进行同源检测,只有和页面 a 同源的脚本才能被执行(即 a.js ),而 b.js 与页面 a 不在同一个源下,所以页面 a 无法执行 b.js。同理,页面 b 也只能执行 b.js 而无法执行 a.js。</p>
 <p>那为什么需要同源策略呢？还是举个简单的例子:<br>假设上述的页面 a 是你已登录的银行网站页面, 而页面 b 则是一个挂了一段恶意脚本(比如篡改页面信息)的页面。假设现在没有同源策略, 这时如果你同时打开页面 a 和页面 b,那当页面 b 执行那段恶意脚本的时候, 你页面 a 中的信息就会被篡改(很有可能你银行账户中辛辛苦苦攒的一个厕所的钱就没了,这时候你一定一脸懵逼吧…)。为了防止这种情况的发生,于是就产生了同源策略。</p>
 <h2 id="二、-JSONP"><a href="#二、-JSONP" class="headerlink" title="二、 JSONP"></a>二、 JSONP</h2><p>那 JavaScript 该如何跨域请求资源呢？方式有很多, 比如通过 Flash 插件, 通过在同源域名下架设一个代理服务器, 或是通过 CORS 方式(你的浏览器必须支持 HTML5 ),有兴趣的小伙伴可以自己去详细了解一下这些方式。今天要介绍另外一种实现 JavaScript 跨域实现请求资源的方法 JSONP。</p>
@@ -380,6 +374,20 @@
         </div>
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/25/JavaScript中的this用法解析/" rel="prev" title="JavaScript中的this用法解析">
+                JavaScript中的this用法解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -448,7 +456,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -465,7 +473,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
