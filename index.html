@@ -330,33 +330,12 @@
 
       
         
-          
-            <p>我们经常会用到 slice() 方法来复制字符串或者数组,但某天无意中发现了 Array.prototype.slice.call(arguments) 这么个方法,感觉挺实用的,于是就写篇博记录一下。</p>
-<h2 id="1-slice-方法"><a href="#1-slice-方法" class="headerlink" title="1.slice 方法"></a>1.slice 方法</h2><p>slice() 方法会浅复制数组/字符串的一部分到一个新的数组/字符串，并返回这个新数组/字符串(以下讲数组的 slice() 方法,字符串的 slice() 方法同数组的)。</p>
-<p>#####语法:</p>
-<blockquote>
-<p>arr.slcie([begin [,end]]);</p>
-</blockquote>
-<p>#####参数:<br><em>1. begin:</em></p>
-<pre><code>表示要截取元素的开始索引(从 0 开始, 包含该索引的元素)
-如果 begin 为负数,表示从原数组倒数第几个元素开始截取
-如果省略 begin 则表示索引从 0 开始
-</code></pre><p><em>2. end:</em></p>
-<pre><code>表示要截取元素的结束索引(不包含该索引的元素)
-如果 end 为负数,表示截取到原数组倒数第几个元素(不包括该元素)
-如果省略 end 则表示截取到数组末尾
-</code></pre><p>#####返回值:<br>slice() 方法返回一个含有截取元素的新数组,并且不会修改原数组。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">'JavaScript'</span>, <span class="string">'Python'</span>, <span class="string">'Swift'</span>];</div><div class="line">c_arr1 = arr.slice();  <span class="comment">// ['JavaScript', 'Python', 'Swift']</span></div><div class="line">c_arr2 = arr.slice(<span class="number">1</span>);  <span class="comment">// ['Python', 'Swift']</span></div><div class="line">c_arr3 = arr.slice(<span class="number">1</span>, <span class="number">2</span>);  <span class="comment">// ['Python']</span></div><div class="line">c_arr4 = arr.slice(<span class="number">-2</span>, <span class="number">-1</span>);  <span class="comment">// ['Python']</span></div><div class="line"><span class="keyword">var</span> a = c_arr1 === arr;  <span class="comment">// false,浅拷贝了原数组</span></div></pre></td></tr></table></figure>
-<h2 id="2-Array-prototype-slice-call-arguments-方法"><a href="#2-Array-prototype-slice-call-arguments-方法" class="headerlink" title="2.Array.prototype.slice.call(arguments) 方法"></a>2.Array.prototype.slice.call(arguments) 方法</h2><p>Array.prototype.slice.call(arguments) 有一个简写形式 [].slice.call(arguments),这个方法能够将一个类数组对象或集合(比如常用的字符串)转换为一个数组。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">change2Array</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</div><div class="line">&#125; </div><div class="line"><span class="keyword">var</span> arr = change2Array(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);  <span class="comment">// [1, 2, 3]</span></div></pre></td></tr></table></figure></p>
-<p>每个函数定义中都会有一个自带的 arguments 参数,这个参数用法与数组类似(但没有数组的方法),它能够使我们在调用函数时能传入任意数量的参数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> str = <span class="string">'-'</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</div><div class="line">	str += <span class="built_in">arguments</span>[i]  + <span class="string">'-'</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> str;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> str = test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);  <span class="comment">// str 的值为 '-1-2-3-'</span></div></pre></td></tr></table></figure></p>
-<p>虽然我们可以像数组一样使用 arguments ,但它却并不是数组的一个实例,因此也就没有数组对象的那些方法。但我们能通过 call() 方法将一个对象替换成另外一个对象,通过 Array.prototype.slice.call(arguments) 将 arguments 对象当做当前对象,此时我们就能调用 slice() 方法了。此外我们能用 [].slice.call(arguments) 来替代 Array.prototype.slice.call(arguments)。</p>
-<h5 id="例1"><a href="#例1" class="headerlink" title="例1:"></a>例1:</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = [].slice.call(<span class="string">'123'</span>);  <span class="comment">// [1, 2, 3]</span></div></pre></td></tr></table></figure>
-<p>通过 [].slice.call(str) 将一个字符串转换为一个数组。</p>
-<h5 id="例2"><a href="#例2" class="headerlink" title="例2:"></a>例2:</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">length</span>: <span class="number">2</span>,</div><div class="line">    <span class="number">0</span>: <span class="string">'xiaoming'</span>,</div><div class="line">    <span class="number">1</span>: <span class="number">24</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> arr = <span class="built_in">Array</span>.prototype.slice.call(obj);  <span class="comment">// ['xiaoming', 24]</span></div></pre></td></tr></table></figure>
-<p>通过 [].slice.call(str) 将一个对象转换为一个数组。</p>
-<p><strong>注意:要转换的对象中必须包含 length 属性,否则输出数组为空！</strong></p>
-
-          
+          <p>我们经常会用到 slice() 方法来复制字符串或者数组,但某天无意中发现了 Array.prototype.slice.call(arguments) 这么个方法,感觉挺实用的,于是就写篇博记录一下。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/26/JavaScript中slice的用法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
