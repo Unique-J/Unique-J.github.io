@@ -1,38 +1,669 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!doctype html>
 
 
-{% block title %} {{ page.title }} | {{ config.title }} {% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript中的this," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="很多编程语言中都有 this 关键字, JavaScript 中也含有 this 这个关键字,不同的是 JavaScript 中的 this 的含义更加丰富,它可以指向某个具体对象,也可以指向全局对象。正是因为 this 丰富的含义, this 关键字在函数中究竟指向谁 这个问题会让很多程序猿(媛)头大。但只要你弄清关于 this 的规则,你就会解决这个问题,所以今天就来谈谈 JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的this用法解析">
+<meta property="og:url" content="http://yoursite.com/2016/10/25/JavaScript中的this用法解析/index.html">
+<meta property="og:site_name" content="Sin">
+<meta property="og:description" content="很多编程语言中都有 this 关键字, JavaScript 中也含有 this 这个关键字,不同的是 JavaScript 中的 this 的含义更加丰富,它可以指向某个具体对象,也可以指向全局对象。正是因为 this 丰富的含义, this 关键字在函数中究竟指向谁 这个问题会让很多程序猿(媛)头大。但只要你弄清关于 this 的规则,你就会解决这个问题,所以今天就来谈谈 JavaScript">
+<meta property="og:updated_time" content="2016-10-25T09:52:15.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript中的this用法解析">
+<meta name="twitter:description" content="很多编程语言中都有 this 关键字, JavaScript 中也含有 this 这个关键字,不同的是 JavaScript 中的 this 的含义更加丰富,它可以指向某个具体对象,也可以指向全局对象。正是因为 this 丰富的含义, this 关键字在函数中究竟指向谁 这个问题会让很多程序猿(媛)头大。但只要你弄清关于 this 的规则,你就会解决这个问题,所以今天就来谈谈 JavaScript">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6344468538945701000',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/25/JavaScript中的this用法解析/"/>
+
+
+  <title> JavaScript中的this用法解析 | Sin </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?cdd4e8f1be33266ea134bc378f8ffed4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sin</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page, false, true) }}
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript中的this用法解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-25T15:27:25+08:00" content="2016-10-25">
+              2016-10-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/25/JavaScript中的this用法解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/25/JavaScript中的this用法解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+		
+	  
+	    <span>&nbsp; | &nbsp;
+	    <span id="busuanzi_value_page_pv" ></span>次阅读
+	    </span>
+	  
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很多编程语言中都有 this 关键字, JavaScript 中也含有 this 这个关键字,不同的是 JavaScript 中的 this 的含义更加丰富,它可以指向某个具体对象,也可以指向全局对象。正是因为 this 丰富的含义, <strong>this 关键字在函数中究竟指向谁</strong> 这个问题会让很多程序猿(媛)头大。但只要你弄清关于 this 的规则,你就会解决这个问题,所以今天就来谈谈 JavaScript 中的 this 关键字。</p>
+<a id="more"></a>
+<h3 id="1、纯粹函数中的-this"><a href="#1、纯粹函数中的-this" class="headerlink" title="1、纯粹函数中的 this"></a>1、纯粹函数中的 this</h3><p>纯粹函数中的 this 属于全局对象。<br>例1-1：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.x = <span class="number">24</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</div><div class="line">&#125;</div><div class="line"></div><div class="line">test(); <span class="comment">// 24</span></div></pre></td></tr></table></figure></p>
+<p>执行上述代码,在控制台中看到输出了 24。此时,在非严格模式下, this 指向了 window 对象,你可以在第 3 行代码下添加如下加以验证：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span> <span class="keyword">instanceof</span> Window ? <span class="string">'a instance of Window'</span> : <span class="string">'not a instance of Window'</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>注：若在严格模式下(use strict)此时的 this 指向 undefined (以下例子均在非严格模式下执行)。</strong><br>例1-2：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">8</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.x = <span class="number">24</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</div><div class="line">&#125;</div><div class="line"></div><div class="line">test(); <span class="comment">// 24</span></div></pre></td></tr></table></figure></p>
+<h3 id="2、对象方法中的-this"><a href="#2、对象方法中的-this" class="headerlink" title="2、对象方法中的 this"></a>2、对象方法中的 this</h3><p>当 this 在对象方法中调用时,这时的 this 指向这个对象。<br>例2-1：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person = &#123; <span class="attr">name</span>: <span class="string">'xiaoming'</span>&#125;;</div><div class="line">person.sayName = name;</div><div class="line">person.sayName(); <span class="comment">// xiaoming</span></div></pre></td></tr></table></figure></p>
+<p>此时的 this 指向 person 对象。<br>例2-2：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> birth = <span class="number">1994</span>;</div><div class="line"><span class="keyword">var</span> person = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xiaoming'</span>,</div><div class="line">    <span class="attr">birth</span>: <span class="number">2004</span>,</div><div class="line">    <span class="attr">getAge</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">getAgeFromBirth</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	    <span class="built_in">console</span>.log(<span class="number">2016</span> - <span class="keyword">this</span>.birth); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> getAgeFromBirth();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">person.getAge(); <span class="comment">// 22</span></div></pre></td></tr></table></figure></p>
+<p>上面的代码为什么输出的是 22 而不是 12 ？？？？(一脸懵逼…)<br>上面不是对象调用的吗,为什么 this 指向的不是 person 对象(Exo???)<br>这是因为当 person 对象调用 getAge 方法时 this 还是指向 person 对象的,但当 getAge 方法返回 getAgeFromBirth 时,此时的 this 已经指向了全局对象 Window,所以此时的 this.birth 值为 1994。<br>那如果我想要输出 12 怎么办？将代码稍作修改就可以实现：<br>例2-3：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> birth = <span class="number">1994</span>;</div><div class="line"><span class="keyword">var</span> person = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xiaoming'</span>,</div><div class="line">    <span class="attr">birth</span>: <span class="number">2004</span>,</div><div class="line">    <span class="attr">getAge</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">getAgeFromBirth</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="number">2016</span> - that.birth); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> getAgeFromBirth();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">person.getAge(); <span class="comment">// 12</span></div></pre></td></tr></table></figure></p>
+<p><em>PS: 了解 JavaScript 闭包的会发现例2-2、例2-3 用到了 JavaScript 闭包。</em></p>
+<h3 id="3、构造函数中的-this"><a href="#3、构造函数中的-this" class="headerlink" title="3、构造函数中的 this"></a>3、构造函数中的 this</h3><p>构造函数中的 this 指向的是 new 出来的新对象。<br>例3-1：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">'window'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = <span class="string">'xiaoming'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</div><div class="line"><span class="built_in">console</span>.log(p.name); <span class="comment">// xiaoming</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// window</span></div></pre></td></tr></table></figure></p>
+<h3 id="4、apply-或-call-中的-this"><a href="#4、apply-或-call-中的-this" class="headerlink" title="4、apply 或 call 中的 this"></a>4、apply 或 call 中的 this</h3><p>apply 和 call 都是函数对象的方法,它们的作用在于改变函数的调用对象。两者在作用上是一致的,只是在传入参数上有一点差别：f.apply(this, arguments), f.call(this, arg1, arg2, …)。两者的第一个参数都是要绑定的对象, apply() 的二个参数传入一个数组,而 call() 的第二个参数则传入多个变量。<br>例4-1：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">'window'</span>;</div><div class="line"><span class="keyword">var</span> person = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xiaoming'</span>,</div><div class="line">    <span class="attr">getName</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">person.getName.apply(); <span class="comment">// window</span></div><div class="line">person.getName.apply(person); <span class="comment">// xiaoming</span></div></pre></td></tr></table></figure></p>
+<p>apply() 参数为空时默认调用全局对象, 最后一行代码将 this 绑定到 person 对象上。</p>
+<p><strong>总结:关于 this 对象究竟指向谁关键在于调用函数的上下文环境。</strong></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript中的this/" rel="tag">#JavaScript中的this</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/25/JavaScript实现跨域方法之JSONP篇/" rel="next" title="JavaScript实现跨域方法之JSONP篇">
+                <i class="fa fa-chevron-left"></i> JavaScript实现跨域方法之JSONP篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/25/Markdown基础语法/" rel="prev" title="Markdown基础语法">
+                Markdown基础语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/25/JavaScript中的this用法解析/"
+           data-title="JavaScript中的this用法解析" data-url="http://yoursite.com/2016/10/25/JavaScript中的this用法解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.JPG"
+               alt="Unique-J" />
+          <p class="site-author-name" itemprop="name">Unique-J</p>
+          <p class="site-description motion-element" itemprop="description">卿尚为谁守城</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、纯粹函数中的-this"><span class="nav-number">1.</span> <span class="nav-text">1、纯粹函数中的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、对象方法中的-this"><span class="nav-number">2.</span> <span class="nav-text">2、对象方法中的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、构造函数中的-this"><span class="nav-number">3.</span> <span class="nav-text">3、构造函数中的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、apply-或-call-中的-this"><span class="nav-number">4.</span> <span class="nav-text">4、apply 或 call 中的 this</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Unique-J</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"Unique-J"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
