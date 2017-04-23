@@ -85,21 +85,18 @@
 
 
 <meta name="description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
-本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
-Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack的基本概念">
 <meta property="og:url" content="http://yoursite.com/2017/04/23/Webpack的基本概念/index.html">
 <meta property="og:site_name" content="Sin">
 <meta property="og:description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
-本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
-Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
-<meta property="og:updated_time" content="2017-04-23T12:26:43.456Z">
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．">
+<meta property="og:updated_time" content="2017-04-23T12:29:41.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack的基本概念">
 <meta name="twitter:description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
-本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
-Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．">
 
 
 
@@ -318,6 +315,7 @@ Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依�
       
         <p><a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a> 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.</p>
 <p><em>本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．</em></p>
+<a id="more"></a>
 <h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p>要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．<br>可以为单入口文件：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  entry: './path/<span class="keyword">to</span>/<span class="keyword">my</span>/entry/<span class="built_in">file</span>.js'</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>也可以为多入口文件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    pageOne: <span class="string">'./src/pageOne/index.js'</span>,</div><div class="line">    pageTwo: <span class="string">'./src/pageTwo/index.js'</span>,</div><div class="line">    pageThree: <span class="string">'./src/pageThree/index.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>将打包的资源文件生成的地方，有两个必要的属性： path 和 filename．<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = require(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = &#123;</div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</div><div class="line">  output: &#123;</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
