@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Webpack," />
 
 
 
@@ -84,15 +84,22 @@
 
 
 
-<meta name="description" content="卿尚为谁守城">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sin">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
+Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack的基本概念">
+<meta property="og:url" content="http://yoursite.com/2017/04/23/Webpack的基本概念/index.html">
 <meta property="og:site_name" content="Sin">
-<meta property="og:description" content="卿尚为谁守城">
+<meta property="og:description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
+Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
+<meta property="og:updated_time" content="2017-04-23T12:26:43.456Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sin">
-<meta name="twitter:description" content="卿尚为谁守城">
+<meta name="twitter:title" content="Webpack的基本概念">
+<meta name="twitter:description" content="Webpack 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.
+本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．
+Entry要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．可以为单入口文件：123module.e">
 
 
 
@@ -113,10 +120,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/23/Webpack的基本概念/"/>
 
 
-  <title> Sin </title>
+  <title> Webpack的基本概念 | Sin </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -147,9 +154,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
@@ -236,9 +241,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -258,10 +263,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/04/23/Webpack的基本概念/" itemprop="url">
-                  Webpack的基本概念
-                </a>
+                Webpack的基本概念
               
             
           </h1>
@@ -292,6 +294,10 @@
           
 		
 	  
+	    <span>&nbsp; | &nbsp;
+	    <span id="busuanzi_value_page_pv" ></span>次阅读
+	    </span>
+	  
 
           
 
@@ -310,9 +316,7 @@
       
 
       
-        
-          
-            <p><a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a> 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.</p>
+        <p><a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a> 是一个现代 JavaScript 应用程序的模块打包器，其主要有四个核心概念： Entry, Output, Loaders, Plugins.</p>
 <p><em>本文基于 Webpack＠2.x.x, Webpack＠1.x.x 不适用．</em></p>
 <h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p>要打包应用的起始入口文件, Webpack 会根据该文件中的依赖去打包其他文件，直到要打包的文件全部打包完毕．<br>可以为单入口文件：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  entry: './path/<span class="keyword">to</span>/<span class="keyword">my</span>/entry/<span class="built_in">file</span>.js'</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>也可以为多入口文件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    pageOne: <span class="string">'./src/pageOne/index.js'</span>,</div><div class="line">    pageTwo: <span class="string">'./src/pageTwo/index.js'</span>,</div><div class="line">    pageThree: <span class="string">'./src/pageThree/index.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
@@ -334,502 +338,59 @@
 <li>HtmlWebpackPlugin: 生成 HTML 模板页面<br>Webpack 还支持很多其他插件，具体参见 <a href="https://webpack.js.org/plugins/" target="_blank" rel="external">Webpack Plugins</a>.</li>
 </ul>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/22/ESLint的基本用法/" itemprop="url">
-                  ESLint的基本用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-22T20:39:31+08:00" content="2017-04-22">
-              2017-04-22
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/22/ESLint的基本用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/22/ESLint的基本用法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-		
-	  
-
-          
-
-          
-          
-
+            <a href="/tags/Webpack/" rel="tag">#Webpack</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><a href="http://eslint.org/">ESLint</a> 是一个插件化的代码检测工具,官方介绍如下:</p>
-<blockquote>
-<p>The pluggable linting utility for JavaScript and JSX.</p>
-</blockquote>
-<p>本文讲述一下ESLint的一些基本用法.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/04/22/ESLint的基本用法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/22/ESLint的基本用法/" rel="next" title="ESLint的基本用法">
+                <i class="fa fa-chevron-left"></i> ESLint的基本用法
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/27/Python函数中的参数/" itemprop="url">
-                  Python函数中的参数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-27T14:32:20+08:00" content="2016-10-27">
-              2016-10-27
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/27/Python函数中的参数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/Python函数中的参数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-		
-	  
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/26/JavaScript中slice的用法/" itemprop="url">
-                  JavaScript中slice()的用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-26T21:12:07+08:00" content="2016-10-26">
-              2016-10-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/26/JavaScript中slice的用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/JavaScript中slice的用法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-		
-	  
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我们经常会用到 slice() 方法来复制字符串或者数组,但某天无意中发现了 Array.prototype.slice.call(arguments) 这么个方法,感觉挺实用的,于是就写篇博记录一下。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/26/JavaScript中slice的用法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/25/Markdown基础语法/" itemprop="url">
-                  Markdown基础语法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-25T18:30:59+08:00" content="2016-10-25">
-              2016-10-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Markdown/" itemprop="url" rel="index">
-                    <span itemprop="name">Markdown</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/25/Markdown基础语法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/25/Markdown基础语法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-		
-	  
-
-          
-
-          
-          
-
-          
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>现在越来越多的人开始用 Markdown 来写一些东西,如果你还不会那你可以看看这篇博客,它将介绍一些 Markdown 的基本语法(图较多,流量少的手机党慎点！！)</p>
-<blockquote>
-<p><a href="https://zh.wikipedia.org/wiki/Markdown">Markdown</a> 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/25/Markdown基础语法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -837,6 +398,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/23/Webpack的基本概念/"
+           data-title="Webpack的基本概念" data-url="http://yoursite.com/2017/04/23/Webpack的基本概念/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -856,8 +425,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.JPG"
@@ -907,6 +485,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Entry"><span class="nav-number">1.</span> <span class="nav-text">Entry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Output"><span class="nav-number">2.</span> <span class="nav-text">Output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loaders"><span class="nav-number">3.</span> <span class="nav-text">Loaders</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins"><span class="nav-number">4.</span> <span class="nav-text">Plugins</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1013,6 +602,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
 
   
 
